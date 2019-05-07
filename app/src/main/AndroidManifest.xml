@@ -23,15 +23,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-      <!--  <activity android:name=".MainActivity" /> -->
+        <!-- <activity android:name=".MainActivity" /> -->
         <activity
+            android:id="@+id/AdminLogin"
             android:name=".AdminLogin"
-            android:label="Admin Login"
-            android:id = "@+id/AdminLogin"/>
+            android:label="Admin Login" />
         <activity
+            android:id="@+id/LoginIntern"
             android:name=".InternLogin"
-            android:label="Intern Login"
-            android:id = "@+id/LoginIntern"></activity>
+            android:label="Intern Login" />
+        <activity
+            android:name=".AboutUs"
+            android:label="About Us" />
+        <activity
+            android:name=".ItemListActivity"
+            android:label="@string/title_item_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ItemDetailActivity"
+            android:label="Task"
+            android:parentActivityName=".ItemListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.dkp1903.helpinghands.ItemListActivity" />
+        </activity>
     </application>
 
 </manifest>
