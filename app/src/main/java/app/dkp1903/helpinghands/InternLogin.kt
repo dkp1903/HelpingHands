@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_intern_login.*
 /**
  * A login screen that offers login via email/password.
  */
-class InternLogin : AppCompatActivity(), LoaderCallbacks<Cursor> {
+class   InternLogin : AppCompatActivity(), LoaderCallbacks<Cursor> {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */

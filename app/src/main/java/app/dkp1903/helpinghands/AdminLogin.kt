@@ -23,6 +23,7 @@ import android.widget.TextView
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
+import com.google.firebase.database.FirebaseDatabase
 
 import kotlinx.android.synthetic.main.activity_admin_login.*
 
@@ -46,9 +47,15 @@ class AdminLogin : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 return@OnEditorActionListener true
             }
             false
+
         })
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
+        // Write a message to the database
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("message")
+
+        myRef.setValue("Hello, World!")
     }
 
     private fun populateAutoComplete() {
