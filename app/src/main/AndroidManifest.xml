@@ -24,9 +24,7 @@
             </intent-filter>
         </activity>
         <!-- <activity android:name=".MainActivity" /> -->
-        <activity
-            android:name=".AdminLogin"
-            android:label="Admin Login" />
+
         <activity
             android:id="@+id/LoginIntern"
             android:name=".InternLogin"

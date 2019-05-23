@@ -10,7 +10,7 @@ import android.widget.Toolbar
 
 class MainActivity : AppCompatActivity() {
 
-    var admloginbutton: Button? = null
+    //var admloginbutton: Button? = null
     var internloginbutton: Button? = null
     var aboutusbutton: Button?= null
     var tasklistbutton: Button?= null
@@ -20,11 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Toast.makeText(this@MainActivity, "Firebase Connection Success", Toast.LENGTH_LONG).show();
 
-        admloginbutton = findViewById(R.id.AdminLogin)
-        admloginbutton?.setOnClickListener({
-            var clickIntent2 = Intent(this@MainActivity, AdminLogin::class.java)
-            startActivity(clickIntent2)
-        })
+
 
         internloginbutton = findViewById(R.id.LoginIntern)
         internloginbutton?.setOnClickListener({
