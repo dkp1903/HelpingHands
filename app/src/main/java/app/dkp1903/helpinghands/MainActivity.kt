@@ -6,22 +6,27 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import android.widget.Toolbar
+import com.google.firebase.database.FirebaseDatabase
 
 
 class MainActivity : AppCompatActivity() {
 
-    //var admloginbutton: Button? = null
+
     var internloginbutton: Button? = null
     var aboutusbutton: Button?= null
     var tasklistbutton: Button?= null
+    /*var mFirebaseDatabase: FirebaseDatabase?
+        get() = null
+        set(value) = TODO()
 
+*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Toast.makeText(this@MainActivity, "Firebase Connection Success", Toast.LENGTH_LONG).show();
 
 
-
+       // mFirebaseDatabase = FirebaseDatabase.getInstance()
         internloginbutton = findViewById(R.id.LoginIntern)
         internloginbutton?.setOnClickListener({
             var clickIntent3 = Intent(this@MainActivity, InternLogin::class.java)
