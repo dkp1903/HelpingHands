@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Helping Hands</string>
 
-    <!-- Strings related to login
+    <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -20,7 +20,7 @@
     <string name="title_activity_scrolling">ScrollingActivity</string>
 
 
-    -->
+    <!--
     <string name="action_sign_in_short">Register</string>
     <string name="email">Email</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
@@ -49,6 +49,7 @@
     <string name="btn_sign_out">Sign Out</string>
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
+    -->
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
