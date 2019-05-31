@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
             var clickIntent3 = Intent(this@MainActivity, InternLogin::class.java)
             startActivity(clickIntent3)
         })
+
         aboutusbutton = findViewById(R.id.AboutUs)
         aboutusbutton?.setOnClickListener({
             var clickIntent4 = Intent(this@MainActivity, AboutUs::class.java)
