@@ -23,6 +23,8 @@ import android.widget.TextView
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
+import android.content.Intent
+import app.dkp1903.helpinghands.dummy.signup
 
 import kotlinx.android.synthetic.main.activity_intern_login.*
 
@@ -49,6 +51,8 @@ class   InternLogin : AppCompatActivity(), LoaderCallbacks<Cursor> {
         })
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
+        email_sign_up_button.setOnClickListener { var signUpActivity = Intent(this, signup::class.java)
+            startActivity(signUpActivity) }
     }
 
     private fun populateAutoComplete() {

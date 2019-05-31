@@ -121,6 +121,9 @@ public class signup extends AppCompatActivity {
                 {
                     Log.d("Debug Auth", "Failed");
                     showErrorDialog("Registration Failed");
+                }else
+                {
+                    showSucessDialog("Registration Successful");
                 }
             }
         });
@@ -135,6 +138,17 @@ public class signup extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+
+    private void showSucessDialog(String message)
+    {
+        new AlertDialog.Builder(this)
+                .setTitle("Congratulations!")
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .show();
+    }
+
 
 
 }

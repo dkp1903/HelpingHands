@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import android.widget.Toolbar
+import app.dkp1903.helpinghands.dummy.signup
 import com.google.firebase.database.FirebaseDatabase
 
 
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
             var clickIntent3 = Intent(this@MainActivity, InternLogin::class.java)
             startActivity(clickIntent3)
         })
+
 
         aboutusbutton = findViewById(R.id.AboutUs)
         aboutusbutton?.setOnClickListener({
