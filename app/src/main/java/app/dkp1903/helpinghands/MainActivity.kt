@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
 
     var internloginbutton: Button? = null
+    var signupbutton: Button ?= null
     var aboutusbutton: Button?= null
     var tasklistbutton: Button?= null
     /*var mFirebaseDatabase: FirebaseDatabase?
@@ -24,16 +25,21 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Toast.makeText(this@MainActivity, "Firebase Connection Success", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this@MainActivity, "Firebase Connection Success", Toast.LENGTH_LONG).show();
 
 
        // mFirebaseDatabase = FirebaseDatabase.getInstance()
         internloginbutton = findViewById(R.id.LoginIntern)
         internloginbutton?.setOnClickListener({
-            var clickIntent3 = Intent(this@MainActivity, InternLogin::class.java)
+            var clickIntent3 = Intent(this@MainActivity, LoginActivity::class.java)
             startActivity(clickIntent3)
         })
 
+        signupbutton = findViewById(R.id.SignUp)
+        signupbutton?.setOnClickListener({
+            var clickIntent2 = Intent(this@MainActivity, signup::class.java)
+            startActivity(clickIntent2)
+        })
 
         aboutusbutton = findViewById(R.id.AboutUs)
         aboutusbutton?.setOnClickListener({
