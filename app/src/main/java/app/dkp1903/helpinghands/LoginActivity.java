@@ -16,10 +16,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-import app.dkp1903.helpinghands.MainActivity;
-import app.dkp1903.helpinghands.R;
-import app.dkp1903.helpinghands.TaskListActivity;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,6 +34,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
+    private String aEmail;
+
 
     //progress dialog
     private ProgressDialog progressDialog;
@@ -57,16 +61,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         */
 
         //initializing views
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        buttonSignIn = (Button) findViewById(R.id.buttonSignin);
-        textViewSignup  = (TextView) findViewById(R.id.textViewSignUp);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        buttonSignIn = findViewById(R.id.buttonSignin);
+        textViewSignup  = findViewById(R.id.textViewSignUp);
 
         progressDialog = new ProgressDialog(this);
 
         //attaching click listener
         buttonSignIn.setOnClickListener(this);
         textViewSignup.setOnClickListener(this);
+
     }
 
     //method for user login
@@ -97,16 +102,49 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
-                        //if the task is successfull
-                        if(task.isSuccessful()){
-                            //start the profile activity
-                            finish();
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = getInstance().getCurrentUser();
+                            if (user != null) {
+                                // Name, email address
+                                String name = user.getDisplayName();
+                                String email = user.getEmail();
+
+                                // Check if user's email is verified
+                                boolean emailVerified = user.isEmailVerified();
+
+                                // The user's ID, unique to the Firebase project. Do NOT use this value to
+                                // authenticate with your backend server, if you have one. Use
+                                // FirebaseUser.getIdToken() instead.
+                                String uid = user.getUid();
+                                // Verify the ID token first.
+                                FirebaseToken decoded = FirebaseAuth.getInstance().verifyIdToken(idToken);
+                                setAdmin(uid);
+                                if (Boolean.TRUE.equals(decoded.getClaims().get("admin"))) {
+                                    // Allow access to requested admin resource.
+                                    startActivity(new Intent(getApplicationContext(), AdminActivity.class));
+                                }
+
+                            }
                             startActivity(new Intent(getApplicationContext(), TaskListActivity.class));
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
                         }
+
+
                     }
                 });
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        //startActivity(new Intent(getApplicationContext(), TaskListActivity.class));
     }
 
     @Override
@@ -120,4 +158,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(this, MainActivity.class));
         }
     }
+
+    private void setAdmin(String UID){
+        // Set admin privilege on the user corresponding to uid.
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("admin", true);
+        getInstance().setCustomUserClaims(UID, claims);
+        onAuthSuccess(task.getResult().getUser());
+    }
+
+
 }
