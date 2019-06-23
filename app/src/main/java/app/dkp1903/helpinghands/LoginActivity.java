@@ -18,9 +18,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -34,6 +31,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
     private String aEmail;
 
 
@@ -48,6 +46,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         //getting firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
+        /*//getting user from firebase
+        user = firebaseAuth.getInstance().getCurrentUser();
+        if (user!= null){
+            String email = user.getEmail();
+            String Uid = user.getUid();
+        }*/
 
         //if the objects getcurrentuser method is not null
         //means user is already logged in
@@ -96,6 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         progressDialog.setMessage("Registering Please Wait...");
         progressDialog.show();
+        finish();
 
         //logging in the user
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -116,14 +121,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 // The user's ID, unique to the Firebase project. Do NOT use this value to
                                 // authenticate with your backend server, if you have one. Use
                                 // FirebaseUser.getIdToken() instead.
-                                String uid = user.getUid();
+                                /*String uid = user.getUid();
                                 // Verify the ID token first.
                                 FirebaseToken decoded = FirebaseAuth.getInstance().verifyIdToken(idToken);
                                 setAdmin(uid);
                                 if (Boolean.TRUE.equals(decoded.getClaims().get("admin"))) {
                                     // Allow access to requested admin resource.
-                                    startActivity(new Intent(getApplicationContext(), AdminActivity.class));
-                                }
+                                    startActivity(new Intent(getApplicationContext(), TaskListActivity.class));
+                                }*/
 
                             }
                             startActivity(new Intent(getApplicationContext(), TaskListActivity.class));
@@ -159,13 +164,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void setAdmin(String UID){
+    /*private void setAdmin(String UID){
         // Set admin privilege on the user corresponding to uid.
         Map<String, Object> claims = new HashMap<>();
         claims.put("admin", true);
         getInstance().setCustomUserClaims(UID, claims);
         onAuthSuccess(task.getResult().getUser());
-    }
+    }*/
 
 
 }

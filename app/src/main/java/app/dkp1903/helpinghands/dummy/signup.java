@@ -1,5 +1,7 @@
 package app.dkp1903.helpinghands.dummy;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,7 +21,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import app.dkp1903.helpinghands.LoginActivity;
 import app.dkp1903.helpinghands.R;
+import app.dkp1903.helpinghands.TaskListActivity;
 
 public class signup extends AppCompatActivity {
 
@@ -27,34 +32,35 @@ public class signup extends AppCompatActivity {
     private AutoCompleteTextView mUsernameView;
     private EditText mPasswordView;
     private EditText mConfirmPasswordView;
+    private Button signUpButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        Log.d("Debug1","onCreate Launched");
 
         mAuth= FirebaseAuth.getInstance();
         mEmailView = (AutoCompleteTextView) findViewById(R.id.register_email);
         mPasswordView = (EditText) findViewById(R.id.register_password);
         mConfirmPasswordView = (EditText) findViewById(R.id.register_confirm_password);
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.register_username);
+        signUpButton = (Button) findViewById(R.id.register_sign_up_button);
 
         // Keyboard sign in action
-        mConfirmPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        /*mConfirmPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.register_form_finished || id == EditorInfo.IME_NULL) {
+                if (id == R.id.register_confirm_password || id == EditorInfo.IME_NULL) {
                     attemptRegistration();
                     return true;
                 }
                 return false;
             }
-        });
-
-    }
-
-    public void signup(View v) {
+        });*/
         attemptRegistration();
+
     }
 
     private void attemptRegistration() {
@@ -62,6 +68,7 @@ public class signup extends AppCompatActivity {
         // Reset errors displayed in the form.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        Log.d("Debug1","attemptReg.() called");
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
@@ -96,6 +103,18 @@ public class signup extends AppCompatActivity {
             createNewUser();
 
         }
+
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Debug1","Sign up button pressed");
+                if(v== signUpButton){
+                    createNewUser();
+                }
+
+            }
+        });
+
     }
 
     private boolean isEmailValid(String email)
@@ -113,6 +132,8 @@ public class signup extends AppCompatActivity {
     {
         String email= mEmailView.getText().toString();
         String password= mPasswordView.getText().toString();
+        Log.d("Debug1","createNewUser() called");
+
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -144,11 +165,17 @@ public class signup extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle("Congratulations!")
                 .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getBaseContext(), TaskListActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .show();
     }
-
 
 
 }
